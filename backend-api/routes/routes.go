@@ -21,26 +21,35 @@ func SetupRouter() *gin.Engine {
 		ExposeHeaders: []string{"Content-Length"},
 	}))
 
+	// =============== Authentikasi ===================
 	// route register
 	router.POST("/api/register", controllers.Register)
-
 	// route login
 	router.POST("/api/login", controllers.Login)
 
+	// ================ Users =========================
 	// route users
 	router.GET("/api/users", middlewares.AuthMiddleware(), controllers.FindUsers)
-
 	// route user create
 	router.POST("/api/users", middlewares.AuthMiddleware(), controllers.CreateUser)
-
 	// route user by id
 	router.GET("/api/users/:id", middlewares.AuthMiddleware(), controllers.FindUserById)
-
 	// route user update
 	router.PUT("/api/users/:id", middlewares.AuthMiddleware(), controllers.UpdateUser)
-
 	// route user delete
 	router.DELETE("/api/users/:id", middlewares.AuthMiddleware(), controllers.DeleteUser)
+
+	// ================ Products =========================
+	// route products
+	router.GET("/api/products", middlewares.AuthMiddleware(), controllers.FindProducts)
+	// route product create
+	router.POST("/api/products", middlewares.AuthMiddleware(), controllers.CreateProduct)
+	// route product by id
+	router.GET("/api/products/:id", middlewares.AuthMiddleware(), controllers.FindProductById)
+	// route product update
+	router.PUT("/api/products/:id", middlewares.AuthMiddleware(), controllers.UpdateProduct)
+	// route product delete
+	router.DELETE("/api/products/:id", middlewares.AuthMiddleware(), controllers.DeleteProduct)
 
 	return router
 }
